@@ -1,9 +1,9 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { ActivePostState, Post } from '../models/post.model';
-import { PostsApiService } from '../services/posts/posts-api.service';
 import { CommonModule } from '@angular/common';
-import { LoaderComponent } from '../loader/loader.component';
-import { PostItemComponent } from './post-item/post-item.component';
+import { PostItemComponent } from '../post-item/post-item.component';
+import { LoaderComponent } from '../../../loader/loader.component';
+import { ActivePostState, Post } from '../../../models/post.model';
+import { PostsApiService } from '../../../services/posts/posts-api.service';
 
 @Component({
   selector: 'app-post-container',

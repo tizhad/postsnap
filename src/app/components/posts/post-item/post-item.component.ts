@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Post } from '../../models/post.model';
-import { COVER_IMAGES } from '../../consts/constants';
+import { Post } from '../../../models/post.model';
+import { COVER_IMAGES } from '../../../consts/constants';
 
 @Component({
   selector: 'app-post-item',
