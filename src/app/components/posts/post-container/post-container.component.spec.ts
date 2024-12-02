@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PostContainerComponent } from './post-container.component';
-import { PostsApiService } from '../services/posts/posts-api.service';
 import { CommonModule } from '@angular/common';
-import { LoaderComponent } from '../loader/loader.component';
 import { PostItemComponent } from '../post-item/post-item.component';
 import { of, throwError } from 'rxjs';
-import { Post } from '../models/post.model';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
+import { PostsApiService } from '../../../services/posts/posts-api.service';
+import { LoaderComponent } from '../../../loader/loader.component';
+import { Post } from '../../../models/post.model';
 
 describe('PostContainerComponent', () => {
   let component: PostContainerComponent;
