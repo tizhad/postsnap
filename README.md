@@ -1,27 +1,78 @@
-# Postsnap
+PostSnap - Angular App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.5.
+A responsive Angular application that fetches 100 posts from the JSONPlaceholder API, displays them in a grid layout, and allows users to interact with them by rotating through post details on click.
 
-## Development server
+Table of Contents
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+    1.	About
+    2.	Tech Stack
+    3.	Features
+    4.	Installation
+    5.	Running the Application
+    6.	Testing
+    7.	Development
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+About
 
-## Build
+PostSnap is an Angular-based application designed to display posts from the JSONPlaceholder API. The application shows posts as squares in a grid layout, with details that can be rotated upon clicking a post. It uses Signal for state management to handle API calls and manage the posts’ state.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Tech Stack
 
-## Running unit tests
+    •	Angular - Frontend framework for building the application.
+    •	Signal - For state management.
+    •	JSONPlaceholder - Fake API for fetching posts.
+    •	Sass/SCSS - For styling the application.
+    •	HttpClientModule - For making HTTP requests.
+    •	Angular CLI - For scaffolding and building the app.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Features
 
-## Running end-to-end tests
+    •	Fetches and displays 100 posts in a grid of 10 rows and 10 columns.
+    •	Rotates through post details (title, userId, id, and body) when clicked.
+    •	Only one post shows details at a time, and clicking another post resets the previous post.
+    •	Designed with modular components for scalability.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
+Installation
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Prerequisites
+
+    •	Node.js (version 18 or higher)
+    •	npm (Node Package Manager)
+
+Steps to Install
+
+    1.	Clone the repository:
+
+        git clone https://github.com/tizhad/postsnap
+cd postsnap
+
+    2.	Install dependencies using npm:
+
+        npm install
+
+Running the Application
+
+After installing the dependencies, you can start the application with the following command:
+
+    ng serve
+
+This will launch the development server at http://localhost:4200.
+
+Testing
+
+Unit Tests
+
+The application uses Jasmine for testing. To run the unit tests, execute:
+
+    ng test
+
+This will run all the unit tests and show the results in the terminal.
+
+Development
+
+Code Style
+
+    •	The project follows Angular style guide for consistency.
+    •	Use Prettier and ESLint for automatic formatting and linting.
