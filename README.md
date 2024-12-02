@@ -1,78 +1,173 @@
-PostSnap - Angular App
+## PostSnap - Angular App
 
 A responsive Angular application that fetches 100 posts from the JSONPlaceholder API, displays them in a grid layout, and allows users to interact with them by rotating through post details on click.
 
-Table of Contents
+---
 
-    1.	About
-    2.	Tech Stack
-    3.	Features
-    4.	Installation
-    5.	Running the Application
-    6.	Testing
-    7.	Development
+### Table of Contents
 
+1. [About](#about)
+2. [Tech Stack](#tech-stack)
+3. [Features](#features)
+4. [Installation](#installation)
+5. [Running the Application](#running-the-application)
+6. [Testing](#testing)
+7. [Development](#development)
+8. [FAQ](#faq)
 
-About
+---
 
-PostSnap is an Angular-based application designed to display posts from the JSONPlaceholder API. The application shows posts as squares in a grid layout, with details that can be rotated upon clicking a post. It uses Signal for state management to handle API calls and manage the posts’ state.
+### About
 
-Tech Stack
+\***\*PostSnap\*\*** is an Angular-based application designed to display posts from the JSONPlaceholder API. Posts are arranged in a grid layout, allowing users to click and rotate through details of a post. The application utilizes Angular Signals for efficient state management.
 
-    •	Angular - Frontend framework for building the application.
-    •	Signal - For state management.
-    •	JSONPlaceholder - Fake API for fetching posts.
-    •	Sass/SCSS - For styling the application.
-    •	HttpClientModule - For making HTTP requests.
-    •	Angular CLI - For scaffolding and building the app.
+---
 
-Features
+### Tech Stack
 
-    •	Fetches and displays 100 posts in a grid of 10 rows and 10 columns.
-    •	Rotates through post details (title, userId, id, and body) when clicked.
-    •	Only one post shows details at a time, and clicking another post resets the previous post.
-    •	Designed with modular components for scalability.
+- \***\*Angular\*\***: Frontend framework for building the application.
+- \***\*Angular Signals\*\***: For state management.
+- \***\*JSONPlaceholder\*\***: Fake API for fetching posts.
+- \***\*SCSS\*\***: For styling the application.
+- \***\*HttpClientModule\*\***: For making HTTP requests.
+- \***\*Angular CLI\*\***: For scaffolding and building the app.
 
+---
 
-Installation
+### Features
 
-Prerequisites
+- Displays 100 posts in a grid of 10 rows and 10 columns on large screens.
+- Responsive design reduces columns on smaller screens to fit content.
+- Rotates post details (title, userId, id, body) when a post is clicked.
+- Only one post shows its details at a time; clicking another resets the previous selection.
+- Modular component-based architecture for scalability and maintainability.
 
-    •	Node.js (version 18 or higher)
-    •	npm (Node Package Manager)
+---
 
-Steps to Install
+### Installation
 
-    1.	Clone the repository:
+#### Prerequisites
 
-        git clone https://github.com/tizhad/postsnap
+- \***\*Node.js\*\*** (version 18 or higher)
+
+- \***\*npm\*\*** (Node Package Manager)
+
+### Steps to Install
+
+**_Clone the repository:_**
+`git  clone  https:github.comtizhadpostsnap`
+
 cd postsnap
 
-    2.	Install dependencies using npm:
+**_ Install dependencies: _**
+` npm  install`
 
-        npm install
+**_Running the Application_**
+After installing the dependencies, start the application:
 
-Running the Application
+`ng  serve`
+This will launch the development server at [http:localhost:4200](http:localhost:4200).
 
-After installing the dependencies, you can start the application with the following command:
+**_Testing_**
 
-    ng serve
+`ng  test`
+This will execute all unit tests and display results in the terminal.
 
-This will launch the development server at http://localhost:4200.
+### Development
 
-Testing
+**Code Style**
+Using **Prettier** and **ESLint** for formatting and linting.
 
-Unit Tests
+**_FAQ_**
 
-The application uses Jasmine for testing. To run the unit tests, execute:
+**1. Is using JWTs safe?**
+JWTs can be safe if:
+• Secure Key Storage: Keep the signing key private and secure. Exposure of this key allows attackers to forge tokens.
+• Avoid Sensitive Data in Payload: Never store sensitive information (e.g., passwords, PII) in the payload. Use JWT for non-critical data like user IDs or roles.
 
-    ng test
+**2. What are the security risks of allowing HTML in user messages?**
 
-This will run all the unit tests and show the results in the terminal.
+**Attack Vectors**:
 
-Development
+- **Cross-Site Scripting (XSS)**:
 
-Code Style
+  - **Risk**: Malicious JavaScript can execute in users’ browsers, stealing sensitive data.
+  - **Mitigation**:
+    - Use libraries like **DOMPurify** to sanitize user input.
+    - Enforce a strong **Content Security Policy (CSP)**.
+    - Escape content before rendering in the DOM.
 
-    •	The project follows Angular style guide for consistency.
-    •	Use Prettier and ESLint for automatic formatting and linting.
+- **HTML Injection (Phishing)**:
+  - **Risk**: Attackers may inject fake login forms or misleading content.
+  - **Mitigation**:
+    - Use a whitelist approach for safe HTML tags and attributes.
+    - Validate URLs to prevent malicious redirects.
+    - Clearly distinguish user-generated content.
+
+**Best Practices**:
+
+- Sanitize and validate all inputs server-side.
+- Monitor user activity for patterns of abuse.
+
+**3. What are mutable and immutable objects?**
+
+- **Mutable Objects**: Can be modified after creation (e.g., arrays, objects).
+- **Immutable Objects**: Cannot be modified after creation. Modifications return a new object instead of altering the original.
+
+**Example of Immutable Object in JavaScript**
+
+```typeScript
+const str = "hello";
+const newStr = str.toUpperCase();
+console.log(str);
+```
+
+**Pros of Immutability**
+
+- **_Predictable State Changes_**: Ensures data integrity and eliminates unexpected side effects.
+- **_Functional Programming_**: Fits well with functional programming paradigms.
+- **_State Management_**: Efficient for libraries like Redux.
+
+**Cons of Immutability**
+
+- **_Performance Overhead_**: Frequent object creation can impact performance.
+- **_Verbosity_**: Updating nested structures often requires complex syntax.
+
+**How to Achieve Immutability**
+
+- **_Using Spread Operator_**:
+
+```typeScript
+const arr = [1, 2, 3]
+const newArr = [...arr, 4];
+```
+
+**_Using_** Object.freeze:
+
+```typeScript
+const obj = Object.freeze({ key: "value" });
+obj.key = "newValue";
+```
+
+- **Using Libraries like Immer**:
+
+```typeScript
+import {  produce  }  from  "immer";
+const state = { count: 0 };
+const  newState  =  produce(state, (draft) =>  {
+draft.count++;
+});
+```
+
+**3. Speeding Up Web Application Loading**
+The first step is identifying the root causes affecting application speed using performance tools such as Lighthouse and Chrome DevTools. Once identified, focus on addressing the most critical issues. Key strategies include:
+
+- Minimize JavaScript, CSS, and HTML files to reduce size and improve loading times.
+- Use code splitting to load only the necessary JavaScript for the initial page render.
+- Implement lazy loading for images and components that are not immediately visible.
+- Use WebP or other next-gen image formats to reduce image file sizes and improve performance.
+- Optimize database queries by fetching only the required data to reduce payload sizes.
+- Use more efficient algorithms and optimize loops for better performance.
+- Implement pagination or infinite scrolling to load only the required data, preventing large datasets from being loaded all at once.
+- Optimize state management to prevent unnecessary re-renders and improve UI responsiveness.
+- Server-Side Rendering (SSR): Pre-render content to provide a faster initial load for users.
