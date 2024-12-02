@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { ActivePostState, Post } from '../models/post.model';
 import { PostsApiService } from '../services/posts/posts-api.service';
 import { CommonModule } from '@angular/common';
@@ -12,7 +12,7 @@ import { PostItemComponent } from './post-item/post-item.component';
   templateUrl: './post-container.component.html',
   styleUrls: ['./post-container.component.scss'],
 })
-export class PostContainerComponent {
+export class PostContainerComponent implements OnInit {
   posts = signal<Post[]>([]);
   activePost = signal<ActivePostState>({
     post: undefined,
@@ -24,7 +24,9 @@ export class PostContainerComponent {
 
   activePostId?: number;
 
-  constructor(private postsApiService: PostsApiService) {
+  constructor(private postsApiService: PostsApiService) {}
+
+  ngOnInit(): void {
     this.loadPosts();
   }
 
