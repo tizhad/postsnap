@@ -1,72 +1,42 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PostItemComponent } from '../post-item/post-item.component';
 import { LoaderComponent } from '../../../loader/loader.component';
-import { ActivePostState, Post } from '../../../models/post.model';
-import { PostsApiService } from '../../../services/posts/posts-api.service';
+import { Post } from '../../../models/post.model';
+import { ActivePostStore, PostsStore } from '../../../store/posts.store';
 
 @Component({
   selector: 'app-post-container',
   standalone: true,
   imports: [CommonModule, LoaderComponent, PostItemComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './post-container.component.html',
   styleUrls: ['./post-container.component.scss'],
 })
-export class PostContainerComponent implements OnInit {
-  posts = signal<Post[]>([]);
-  activePost = signal<ActivePostState>({
-    post: undefined,
-    activeKeyIndex: 1,
-  });
-  loading = signal<boolean>(false);
-  errorMessage?: string;
-  allProperties: (keyof Post)[] = ['title', 'id', 'body', 'userId'];
+export class PostContainerComponent {
+  readonly postsStore = inject(PostsStore);
+  readonly activePostStore = inject(ActivePostStore);
 
   activePostId?: number;
 
-  constructor(private postsApiService: PostsApiService) {}
-
-  ngOnInit(): void {
-    this.loadPosts();
+  constructor() {
+    this.postsStore.loadPosts();
   }
 
-  loadPosts(): void {
-    this.loading.set(true);
-    this.postsApiService.getPosts().subscribe({
-      next: (posts) => {
-        this.posts.set(posts);
-        this.loading.set(false);
-      },
-      error: (error) => {
-        this.errorMessage = error.message;
-        this.loading.set(false);
-      },
-    });
-  }
-
-  onPostClick(postId: number): void {
-    if (!postId) return;
-    this.activePostId = postId;
-
-    const clickedPost = this.posts().find((post) => post.id === postId);
-    if (!clickedPost) return;
-    const currentState = this.activePost();
-
-    const nextKeyIndex =
-      (currentState.activeKeyIndex + 1) % this.allProperties.length;
-    this.activePost.set({
-      post: clickedPost,
-      activeKeyIndex: nextKeyIndex,
-    });
+  onPostClick(post: Post): void {
+    if (!post) return;
+    this.activePostStore.setActivePost(post);
+    this.activePostId = post.id;
   }
 
   getPropertyForPost(post: Post): string | number {
-    const currentState = this.activePost();
-    if (currentState?.post?.id === post.id) {
-      return post[
-        this.allProperties[currentState.activeKeyIndex] as keyof Post
-      ];
+    const activePost = this.activePostStore.post?.();
+    const activeIndexValue = this.activePostStore.activeIndexValue?.();
+
+    if (activePost?.id === post.id) {
+      return activeIndexValue ?? post.title;
     }
+
     return post.title;
   }
 }

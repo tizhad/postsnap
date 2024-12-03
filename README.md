@@ -19,18 +19,18 @@ A responsive Angular application that fetches 100 posts from the JSONPlaceholder
 
 ### About
 
-\***\*PostSnap\*\*** is an Angular-based application designed to display posts from the JSONPlaceholder API. Posts are arranged in a grid layout, allowing users to click and rotate through details of a post. The application utilizes Angular Signals for efficient state management.
+***PostSnap*** is an Angular-based application designed to display posts from the JSONPlaceholder API. Posts are arranged in a grid layout, allowing users to click and rotate through details of a post. The application utilizes Angular Signals for efficient state management.
 
 ---
 
 ### Tech Stack
 
-- \***\*Angular\*\***: Frontend framework for building the application.
-- \***\*Angular Signals\*\***: For state management.
-- \***\*JSONPlaceholder\*\***: Fake API for fetching posts.
-- \***\*SCSS\*\***: For styling the application.
-- \***\*HttpClientModule\*\***: For making HTTP requests.
-- \***\*Angular CLI\*\***: For scaffolding and building the app.
+- **Angular**: Frontend framework for building the application.
+- **Angular Signals**: For state management.
+- **JSONPlaceholder**: Fake API for fetching posts.
+- **SCSS**: For styling the application.
+- **HttpClientModule**: For making HTTP requests.
+- **Angular CLI**: For scaffolding and building the app.
 
 ---
 
@@ -48,37 +48,46 @@ A responsive Angular application that fetches 100 posts from the JSONPlaceholder
 
 #### Prerequisites
 
-- \***\*Node.js\*\*** (version 18 or higher)
+- **Node.js** (version 18 or higher)
 
-- \***\*npm\*\*** (Node Package Manager)
+- **npm** (Node Package Manager)
 
 ### Steps to Install
 
+
+
 **_Clone the repository:_**
+
 `git  clone  https:github.comtizhadpostsnap`
 
 cd postsnap
 
-**_ Install dependencies: _**
+
+
+**_Install dependencies:_**
+
 ` npm  install`
 
 **_Running the Application_**
 After installing the dependencies, start the application:
 
 `ng  serve`
+
 This will launch the development server at [http:localhost:4200](http:localhost:4200).
 
 **_Testing_**
 
 `ng  test`
+
 This will execute all unit tests and display results in the terminal.
 
 ### Development
 
 **Code Style**
+
 Using **Prettier** and **ESLint** for formatting and linting.
 
-**_FAQ_**
+**_Q&A_**
 
 **1. Is using JWTs safe?**
 JWTs can be safe if:
