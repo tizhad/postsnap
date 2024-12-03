@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PostItemComponent } from '../post-item/post-item.component';
 import { LoaderComponent } from '../../../loader/loader.component';
@@ -13,13 +18,13 @@ import { ActivePostStore, PostsStore } from '../../../store/posts.store';
   templateUrl: './post-container.component.html',
   styleUrls: ['./post-container.component.scss'],
 })
-export class PostContainerComponent {
+export class PostContainerComponent implements OnInit {
   readonly postsStore = inject(PostsStore);
   readonly activePostStore = inject(ActivePostStore);
 
   activePostId?: number;
 
-  constructor() {
+  ngOnInit(): void {
     this.postsStore.loadPosts();
   }
 
