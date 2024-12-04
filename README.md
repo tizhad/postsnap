@@ -13,7 +13,7 @@ A responsive Angular application that fetches 100 posts from the JSONPlaceholder
 5. [Running the Application](#running-the-application)
 6. [Testing](#testing)
 7. [Development](#development)
-8. [FAQ](#faq)
+8. [Q&A](#faq)
 
 ---
 
@@ -26,7 +26,7 @@ A responsive Angular application that fetches 100 posts from the JSONPlaceholder
 ### Tech Stack
 
 - **Angular**: Frontend framework for building the application.
-- **Angular Signals**: For state management.
+- **Angular Signal Store**: For state management.
 - **JSONPlaceholder**: Fake API for fetching posts.
 - **SCSS**: For styling the application.
 - **HttpClientModule**: For making HTTP requests.
