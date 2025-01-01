@@ -1,18 +1,23 @@
 <article class="post-container">
-  <div class="active-post-id">
-    Active Post ID: {{ activePostId || 'Select A Post' }}
-  </div>
+  <div>Active Post ID: {{ activePostId || 'Select A Post' }}</div>
 
   <div class="post-grid">
     <app-loader *ngIf="postsStore.isLoading()"></app-loader>
 
     <ng-container *ngIf="!postsStore.isLoading()">
-      <app-post-item
-        *ngFor="let post of postsStore.posts()"
-        (click)="onPostClick(post)"
-        [post]="post"
-        [currentProperty]="getPropertyForPost(post)"
-      ></app-post-item>
+      <section *ngIf="postsStore.posts().length; else noPosts">
+        <app-post-item
+          *ngFor="let post of postsStore.posts(); trackBy: trackByPostId"
+          (click)="onPostClick(post)"
+          [post]="post"
+          [currentProperty]="getPropertyForPost(post)"
+          [class.active]="post.id === activePostId"
+        ></app-post-item>
+      </section>
+
+      <ng-template #noPosts>
+        <div class="no-posts-message">No posts available</div>
+      </ng-template>
     </ng-container>
   </div>
 </article>

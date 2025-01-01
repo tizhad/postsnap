@@ -2,7 +2,10 @@ import { inject } from '@angular/core';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { Post } from '../models/post.model';
 import { PostsApiService } from '../services/posts/posts-api.service';
-import { catchError, tap, from, of } from 'rxjs';
+import { catchError, tap, EMPTY } from 'rxjs';
+
+type PostKey = keyof Post;
+const ALL_PROPERTIES: PostKey[] = ['title', 'id', 'body', 'userId'];
 
 type PostsState = {
   posts: Post[];
@@ -19,7 +22,7 @@ const initialPostsState: PostsState = {
 type ActivePostState = {
   post?: Post;
   activeKeyIndex: number;
-  activeIndexValue?: number | string;
+  activeIndexValue?: Post[PostKey];
 };
 
 const initialActivePostState: ActivePostState = {
@@ -28,37 +31,26 @@ const initialActivePostState: ActivePostState = {
   activeIndexValue: undefined,
 };
 
-const ALL_PROPERTIES: (keyof Post)[] = ['title', 'id', 'body', 'userId'];
-
 export const PostsStore = signalStore(
   { providedIn: 'root' },
   withState(initialPostsState),
   withMethods((store, postsApiService = inject(PostsApiService)) => ({
     loadPosts() {
-      patchState(store, {
-        isLoading: true,
-        error: null,
-      });
+      patchState(store, { isLoading: true, error: null });
+
       postsApiService
         .getPosts()
         .pipe(
-          tap({
-            next: (posts) => {
-              patchState(store, {
-                posts,
-                isLoading: false,
-              });
-            },
-            error: (error) => {
-              console.error('Error loading posts:', error);
-              patchState(store, {
-                isLoading: false,
-                error: error.message || 'Failed to load posts',
-              });
-            },
+          tap((posts) => {
+            patchState(store, { posts, isLoading: false, error: null });
           }),
           catchError((error) => {
-            return of([]);
+            patchState(store, {
+              posts: [],
+              isLoading: false,
+              error: error.message || 'Failed to load posts',
+            });
+            return EMPTY;
           })
         )
         .subscribe();
@@ -74,7 +66,9 @@ export const ActivePostStore = signalStore(
       const activePost = store.post?.();
       const activeKeyIndex = store.activeKeyIndex();
 
-      if (!activePost || activePost.id !== post.id) {
+      const isNewPost = !activePost || activePost.id !== post.id;
+
+      if (isNewPost) {
         const nextKeyIndex = 1 % ALL_PROPERTIES.length;
         const nextPropertyKey = ALL_PROPERTIES[nextKeyIndex];
         patchState(store, {
@@ -82,7 +76,6 @@ export const ActivePostStore = signalStore(
           activeKeyIndex: nextKeyIndex,
           activeIndexValue: post[nextPropertyKey],
         });
-        return;
       }
       const nextKeyIndex = (activeKeyIndex + 1) % ALL_PROPERTIES.length;
       const nextPropertyKey = ALL_PROPERTIES[nextKeyIndex];
@@ -90,6 +83,10 @@ export const ActivePostStore = signalStore(
         activeKeyIndex: nextKeyIndex,
         activeIndexValue: post[nextPropertyKey],
       });
+    },
+
+    resetActivePost(): void {
+      patchState(store, initialActivePostState);
     },
   }))
 );

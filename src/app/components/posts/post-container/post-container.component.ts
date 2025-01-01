@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -18,7 +19,7 @@ import { ActivePostStore, PostsStore } from '../../../store/posts.store';
   templateUrl: './post-container.component.html',
   styleUrls: ['./post-container.component.scss'],
 })
-export class PostContainerComponent implements OnInit {
+export class PostContainerComponent implements OnInit, OnDestroy {
   readonly postsStore = inject(PostsStore);
   readonly activePostStore = inject(ActivePostStore);
 
@@ -26,6 +27,10 @@ export class PostContainerComponent implements OnInit {
 
   ngOnInit(): void {
     this.postsStore.loadPosts();
+  }
+
+  ngOnDestroy(): void {
+    this.activePostStore.resetActivePost();
   }
 
   onPostClick(post: Post): void {
@@ -43,5 +48,9 @@ export class PostContainerComponent implements OnInit {
     }
 
     return post.title;
+  }
+
+  trackByPostId(index: number, post: Post): number {
+    return post.id;
   }
 }
